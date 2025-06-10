@@ -1,0 +1,82 @@
+package finalmission.reservatioin.service;
+
+import finalmission.customer.entity.Customer;
+import finalmission.customer.repository.CustomerJpaRepository;
+import finalmission.omakase.entity.Omakase;
+import finalmission.omakase.repository.OmakaseJpaRepository;
+import finalmission.reservatioin.controller.dto.CurrentStateReservationResponse;
+import finalmission.reservatioin.controller.dto.ReservationCreateRequest;
+import finalmission.reservatioin.entity.Reservation;
+import finalmission.reservatioin.entity.ReservationTime;
+import finalmission.reservatioin.entity.ReservationWithNumberOfPeople;
+import finalmission.reservatioin.respository.ReservationJpaRepository;
+import java.time.LocalDate;
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ReservationService {
+
+    private final ReservationJpaRepository reservationJpaRepository;
+    private final OmakaseJpaRepository omakaseJpaRepository;
+    private final CustomerJpaRepository customerJpaRepository;
+
+    public ReservationService(
+            ReservationJpaRepository reservationJpaRepository,
+            OmakaseJpaRepository omakaseJpaRepository,
+            CustomerJpaRepository customerJpaRepository
+    ) {
+        this.reservationJpaRepository = reservationJpaRepository;
+        this.omakaseJpaRepository = omakaseJpaRepository;
+        this.customerJpaRepository = customerJpaRepository;
+    }
+
+    public Reservation save(ReservationCreateRequest request) {
+        Customer customer = getCustomerByName(request.customerName());
+        LocalDate date = request.reservationDate();
+        ReservationTime time = ReservationTime.toReservationTime(request.reservationTime());
+        Omakase omakase = getOmakaseByName(request.omakaseStoreName());
+
+        validateDuplicateReservationByDateAndTime(time, date, omakase);
+
+        return reservationJpaRepository.save(new Reservation(customer, omakase, time, date));
+    }
+
+    public void deleteById(Long id) {
+        reservationJpaRepository.deleteById(id);
+    }
+
+    public List<Reservation> findAllByMemberId(Long id) {
+        return reservationJpaRepository.findAllByCustomerId(id);
+    }
+
+    private Customer getCustomerByName(String name) {
+        return customerJpaRepository
+                .findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 회원입니다. 이름을 다시 확인해 주세요."));
+    }
+
+    private Omakase getOmakaseByName(String omakaseStoreName) {
+        return omakaseJpaRepository
+                .findByStoreName(omakaseStoreName)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 업장입니다. 업장 이름을 다시 확인해 주세요."));
+    }
+
+    private void validateDuplicateReservationByDateAndTime(
+            ReservationTime time,
+            LocalDate date,
+            Omakase omakase
+    ) {
+        Long count = reservationJpaRepository
+                .countReservationByReservationTimeAndReservationDateAndOmakase
+                        (time, date, omakase);
+        if (count > 3) {
+            throw new IllegalArgumentException("[ERROR] 해당 업장의 대기가 마감되었습니다. 다른 일자를 선택해 주세요.");
+        }
+    }
+
+    public List<CurrentStateReservationResponse> findAllReservationWithNumberOfPeople() {
+        List<ReservationWithNumberOfPeople> all = reservationJpaRepository.findAllWithRank();
+        return CurrentStateReservationResponse.from(all);
+    }
+}
