@@ -39,7 +39,7 @@ class ReservationJpaRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        customer = new Customer("neo", "neo@com", "1234");
+        customer = new Customer("neo", "우아한네오", "neo@com", "1234");
         omakase = new Omakase("스시준", MIDDLE);
         date = LocalDate.now();
         reservation = new Reservation(customer, omakase, LUNCH, date);

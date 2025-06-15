@@ -17,6 +17,9 @@ public class Customer {
     private String name;
 
     @Column
+    private String nickName;
+
+    @Column
     private String email;
 
     @Column
@@ -26,8 +29,9 @@ public class Customer {
 
     }
 
-    public Customer(String name, String email, String password) {
+    public Customer(String name, String nickName, String email, String password) {
         this.name = name;
+        this.nickName = nickName;
         this.email = email;
         this.password = password;
     }
@@ -46,5 +50,9 @@ public class Customer {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 }

@@ -1,6 +1,6 @@
 package finalmission.customer.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,7 @@ class RandomNameRestClientTest {
     @Test
     void randomName() {
         String randomName = restClient.getRandomName();
-        System.out.println(randomName);
+        assertThat(!randomName.isBlank()).isTrue();
     }
 
 }

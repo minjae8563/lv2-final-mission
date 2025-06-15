@@ -14,18 +14,21 @@ public class CustomerService {
 
     private final CustomerJpaRepository customerJpaRepository;
     private final ReservationJpaRepository reservationJpaRepository;
+    private final RandomNameRestClient randomNameRestClient;
 
     public CustomerService(CustomerJpaRepository customerJpaRepository,
-                           ReservationJpaRepository reservationJpaRepository) {
+                           ReservationJpaRepository reservationJpaRepository, RandomNameRestClient randomNameRestClient) {
         this.customerJpaRepository = customerJpaRepository;
         this.reservationJpaRepository = reservationJpaRepository;
+        this.randomNameRestClient = randomNameRestClient;
     }
 
     public Customer save(@Valid CustomerCreateRequest memberCreateResponse) {
         String name = memberCreateResponse.name();
         String email = memberCreateResponse.email();
         String password = memberCreateResponse.password();
-        Customer customer = new Customer(name, email, password);
+        String nickName = randomNameRestClient.getRandomName();
+        Customer customer = new Customer(name, nickName, email, password);
         return customerJpaRepository.save(customer);
     }
 
