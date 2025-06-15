@@ -1,4 +1,4 @@
-package finalmission.reservatioin.controller.dto;
+package finalmission.reservatioin.controller.dto.response;
 
 import finalmission.reservatioin.entity.ReservationTime;
 import finalmission.reservatioin.entity.ReservationWithNumberOfPeople;

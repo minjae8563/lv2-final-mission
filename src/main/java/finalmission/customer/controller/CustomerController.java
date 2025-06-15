@@ -1,6 +1,6 @@
 package finalmission.customer.controller;
 
-import finalmission.customer.controller.dto.CustomerCreateRequest;
+import finalmission.customer.controller.dto.request.CustomerCreateRequest;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.service.CustomerService;
 import jakarta.validation.Valid;

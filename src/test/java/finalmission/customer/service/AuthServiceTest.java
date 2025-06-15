@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import finalmission.customer.controller.dto.TokenLoginCreateRequest;
-import finalmission.customer.controller.dto.TokenLoginResponse;
+import finalmission.customer.controller.dto.request.TokenLoginCreateRequest;
 import finalmission.customer.infrastructure.JwtTokenProvider;
 import finalmission.customer.repository.CustomerJpaRepository;
 import org.junit.jupiter.api.DisplayName;

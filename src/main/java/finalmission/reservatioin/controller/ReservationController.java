@@ -2,8 +2,8 @@ package finalmission.reservatioin.controller;
 
 import finalmission.customer.entity.Customer;
 import finalmission.customer.resolver.LoginCustomer;
-import finalmission.reservatioin.controller.dto.CurrentStateReservationResponse;
-import finalmission.reservatioin.controller.dto.ReservationCreateRequest;
+import finalmission.reservatioin.controller.dto.response.CurrentStateReservationResponse;
+import finalmission.reservatioin.controller.dto.request.ReservationCreateRequest;
 import finalmission.reservatioin.entity.Reservation;
 import finalmission.reservatioin.service.ReservationService;
 import jakarta.validation.Valid;

@@ -1,7 +1,7 @@
 package finalmission.customer.service;
 
-import finalmission.customer.controller.dto.TokenLoginCreateRequest;
-import finalmission.customer.controller.dto.TokenLoginResponse;
+import finalmission.customer.controller.dto.request.TokenLoginCreateRequest;
+import finalmission.customer.controller.dto.response.TokenLoginResponse;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.infrastructure.JwtTokenProvider;
 import finalmission.customer.repository.CustomerJpaRepository;

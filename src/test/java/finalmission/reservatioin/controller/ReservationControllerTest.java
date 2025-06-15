@@ -3,7 +3,7 @@ package finalmission.reservatioin.controller;
 import static finalmission.reservatioin.entity.ReservationTime.LUNCH;
 import static org.hamcrest.Matchers.is;
 
-import finalmission.customer.controller.dto.TokenLoginCreateRequest;
+import finalmission.customer.controller.dto.request.TokenLoginCreateRequest;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.repository.CustomerJpaRepository;
 import finalmission.customer.service.AuthService;

@@ -1,12 +1,9 @@
 package finalmission.customer.service;
 
-import finalmission.customer.controller.dto.CustomerCreateRequest;
+import finalmission.customer.controller.dto.request.CustomerCreateRequest;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.repository.CustomerJpaRepository;
-import finalmission.reservatioin.entity.Reservation;
-import finalmission.reservatioin.respository.ReservationJpaRepository;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service

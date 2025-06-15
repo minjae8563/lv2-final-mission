@@ -1,4 +1,4 @@
-package finalmission.customer.controller.dto;
+package finalmission.customer.controller.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

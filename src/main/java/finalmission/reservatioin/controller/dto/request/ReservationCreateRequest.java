@@ -1,4 +1,4 @@
-package finalmission.reservatioin.controller.dto;
+package finalmission.reservatioin.controller.dto.request;
 
 import finalmission.reservatioin.entity.ReservationTime;
 import jakarta.validation.constraints.NotBlank;
