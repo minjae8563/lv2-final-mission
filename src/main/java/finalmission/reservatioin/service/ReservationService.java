@@ -31,10 +31,10 @@ public class ReservationService {
         this.customerJpaRepository = customerJpaRepository;
     }
 
-    public Reservation save(ReservationCreateRequest request) {
-        Customer customer = getCustomerByName(request.customerName());
+    public Reservation save(long id, ReservationCreateRequest request) {
+        Customer customer = getCustomerById(id);
         LocalDate date = request.reservationDate();
-        ReservationTime time = ReservationTime.toReservationTime(request.reservationTime());
+        ReservationTime time = request.reservationTime();
         Omakase omakase = getOmakaseByName(request.omakaseStoreName());
 
         validateDuplicateReservationByDateAndTime(time, date, omakase);
@@ -42,17 +42,26 @@ public class ReservationService {
         return reservationJpaRepository.save(new Reservation(customer, omakase, time, date));
     }
 
-    public void deleteById(Long id) {
-        reservationJpaRepository.deleteById(id);
+    public void deleteById(Long customerId, Long id) {
+        Reservation reservation = reservationJpaRepository.getReferenceById(id);
+        if (reservation.isSameCustomerId(customerId)) {
+            reservationJpaRepository.deleteById(id);
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 본인의 예약만 삭제할 수 있습니다.");
     }
 
     public List<Reservation> findAllByMemberId(Long id) {
         return reservationJpaRepository.findAllByCustomerId(id);
     }
 
-    private Customer getCustomerByName(String name) {
-        return customerJpaRepository
-                .findByName(name)
+    private Reservation getReservationById(Long id) {
+        return reservationJpaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 예약입니다. 확인해 주세요."));
+    }
+
+    private Customer getCustomerById(Long id) {
+        return customerJpaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 회원입니다. 이름을 다시 확인해 주세요."));
     }
 

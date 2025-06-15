@@ -6,6 +6,7 @@ import finalmission.reservatioin.controller.dto.CurrentStateReservationResponse;
 import finalmission.reservatioin.controller.dto.ReservationCreateRequest;
 import finalmission.reservatioin.entity.Reservation;
 import finalmission.reservatioin.service.ReservationService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/reservations")
+@RestController
+@RequestMapping("/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -26,17 +30,19 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<Reservation> save(
-        ReservationCreateRequest request
+        @LoginCustomer Customer customer,
+        @Valid @RequestBody ReservationCreateRequest request
     ) {
-        Reservation save = reservationService.save(request);
+        Reservation save = reservationService.save(customer.getId(), request);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long id
+            @LoginCustomer Customer customer,
+            @PathVariable("id") Long id
     ) {
-        reservationService.deleteById(id);
+        reservationService.deleteById(customer.getId(), id);
         return ResponseEntity.noContent().build();
     }
 

@@ -57,4 +57,8 @@ public class Reservation {
     public LocalDate getReservationDate() {
         return reservationDate;
     }
+
+    public boolean isSameCustomerId(Long customerId) {
+        return customer.isSameId(customerId);
+    }
 }

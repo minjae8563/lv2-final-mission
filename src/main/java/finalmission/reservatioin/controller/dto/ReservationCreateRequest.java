@@ -1,12 +1,23 @@
 package finalmission.reservatioin.controller.dto;
 
+import finalmission.reservatioin.entity.ReservationTime;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public record ReservationCreateRequest(
+        @NotNull
+        @NotBlank
         String customerName,
+
+        @NotNull
+        @NotBlank
         String omakaseStoreName,
+
+        @NotNull
         LocalDate reservationDate,
-        LocalTime reservationTime
+
+        @NotNull
+        ReservationTime reservationTime
 ) {
 }
