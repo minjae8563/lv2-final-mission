@@ -12,7 +12,7 @@ public class Omakase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String storeName;
@@ -23,6 +23,11 @@ public class Omakase {
     protected Omakase() {}
 
     public Omakase(String storeName, Rating rating) {
+        this(null, storeName, rating);
+    }
+
+    public Omakase(Long id, String storeName, Rating rating) {
+        this.id = id;
         this.storeName = storeName;
         this.rating = rating;
     }
