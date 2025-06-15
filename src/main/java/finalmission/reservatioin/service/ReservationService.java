@@ -6,6 +6,7 @@ import finalmission.omakase.entity.Omakase;
 import finalmission.omakase.repository.OmakaseJpaRepository;
 import finalmission.reservatioin.controller.dto.response.CurrentStateReservationResponse;
 import finalmission.reservatioin.controller.dto.request.ReservationCreateRequest;
+import finalmission.reservatioin.controller.dto.response.ReservationResponse;
 import finalmission.reservatioin.entity.Reservation;
 import finalmission.reservatioin.entity.ReservationTime;
 import finalmission.reservatioin.entity.ReservationWithNumberOfPeople;
@@ -31,7 +32,7 @@ public class ReservationService {
         this.customerJpaRepository = customerJpaRepository;
     }
 
-    public Reservation save(long id, ReservationCreateRequest request) {
+    public ReservationResponse save(long id, ReservationCreateRequest request) {
         Customer customer = getCustomerById(id);
         LocalDate date = request.reservationDate();
         ReservationTime time = request.reservationTime();
@@ -39,7 +40,8 @@ public class ReservationService {
 
         validateDuplicateReservationByDateAndTime(time, date, omakase);
 
-        return reservationJpaRepository.save(new Reservation(customer, omakase, time, date));
+        Reservation save = reservationJpaRepository.save(new Reservation(customer, omakase, time, date));
+        return ReservationResponse.of(save);
     }
 
     public void deleteById(Long customerId, Long id) {
@@ -51,8 +53,8 @@ public class ReservationService {
         throw new IllegalArgumentException("[ERROR] 본인의 예약만 삭제할 수 있습니다.");
     }
 
-    public List<Reservation> findAllByMemberId(Long id) {
-        return reservationJpaRepository.findAllByCustomerId(id);
+    public List<ReservationResponse> findAllByMemberId(Long id) {
+        return ReservationResponse.from(reservationJpaRepository.findAllByCustomerId(id));
     }
 
     private Customer getCustomerById(Long id) {

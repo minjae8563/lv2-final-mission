@@ -1,6 +1,7 @@
 package finalmission.customer.controller;
 
 import finalmission.customer.controller.dto.request.CustomerCreateRequest;
+import finalmission.customer.controller.dto.response.CustomerCreateResponse;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.service.CustomerService;
 import jakarta.validation.Valid;
@@ -22,11 +23,10 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> create(
+    public ResponseEntity<CustomerCreateResponse> create(
             @Valid @RequestBody CustomerCreateRequest customerCreateRequest
     ) {
-        Customer save = customerService.save(customerCreateRequest);
+        CustomerCreateResponse save = customerService.save(customerCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
-
 }

@@ -17,7 +17,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
@@ -36,6 +36,12 @@ public class Reservation {
     }
 
     public Reservation(Customer customer, Omakase omakase, ReservationTime reservationTime, LocalDate reservationDate) {
+        this(null, customer, omakase, reservationTime, reservationDate);
+    }
+
+    public Reservation(Long id, Customer customer, Omakase omakase, ReservationTime reservationTime,
+                       LocalDate reservationDate) {
+        this.id = id;
         this.customer = customer;
         this.omakase = omakase;
         this.reservationTime = reservationTime;

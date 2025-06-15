@@ -4,6 +4,7 @@ import finalmission.customer.entity.Customer;
 import finalmission.customer.resolver.LoginCustomer;
 import finalmission.reservatioin.controller.dto.response.CurrentStateReservationResponse;
 import finalmission.reservatioin.controller.dto.request.ReservationCreateRequest;
+import finalmission.reservatioin.controller.dto.response.ReservationResponse;
 import finalmission.reservatioin.entity.Reservation;
 import finalmission.reservatioin.service.ReservationService;
 import jakarta.validation.Valid;
@@ -29,11 +30,11 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> save(
+    public ResponseEntity<ReservationResponse> save(
         @LoginCustomer Customer customer,
         @Valid @RequestBody ReservationCreateRequest request
     ) {
-        Reservation save = reservationService.save(customer.getId(), request);
+        ReservationResponse save = reservationService.save(customer.getId(), request);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
     }
 
@@ -47,10 +48,10 @@ public class ReservationController {
     }
 
     @GetMapping("/mine")
-    public ResponseEntity<List<Reservation>> getMyReservations(
+    public ResponseEntity<List<ReservationResponse>> getMyReservations(
             @LoginCustomer Customer customer
     ) {
-        List<Reservation> findAll = reservationService.findAllByMemberId(customer.getId());
+        List<ReservationResponse> findAll = reservationService.findAllByMemberId(customer.getId());
         return ResponseEntity.ok().body(findAll);
     }
 

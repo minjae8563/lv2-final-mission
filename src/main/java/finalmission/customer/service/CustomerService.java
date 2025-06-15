@@ -1,6 +1,7 @@
 package finalmission.customer.service;
 
 import finalmission.customer.controller.dto.request.CustomerCreateRequest;
+import finalmission.customer.controller.dto.response.CustomerCreateResponse;
 import finalmission.customer.entity.Customer;
 import finalmission.customer.repository.CustomerJpaRepository;
 import jakarta.validation.Valid;
@@ -18,12 +19,13 @@ public class CustomerService {
         this.randomNameRestClient = randomNameRestClient;
     }
 
-    public Customer save(@Valid CustomerCreateRequest memberCreateResponse) {
+    public CustomerCreateResponse save(@Valid CustomerCreateRequest memberCreateResponse) {
         String name = memberCreateResponse.name();
         String email = memberCreateResponse.email();
         String password = memberCreateResponse.password();
         String nickName = randomNameRestClient.getRandomName();
         Customer customer = new Customer(name, nickName, email, password);
-        return customerJpaRepository.save(customer);
+        Customer save = customerJpaRepository.save(customer);
+        return CustomerCreateResponse.of(save);
     }
 }
