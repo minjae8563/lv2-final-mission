@@ -1,4 +1,4 @@
-package finalmission.globar.config;
+package finalmission.global.config;
 
 import finalmission.customer.resolver.LoginCustomerArgumentResolver;
 import java.util.List;

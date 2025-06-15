@@ -1,4 +1,4 @@
-package finalmission.globar.exception;
+package finalmission.global.exception;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
