@@ -5,13 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String name;
@@ -30,6 +31,11 @@ public class Customer {
     }
 
     public Customer(String name, String nickName, String email, String password) {
+        this(null, name, nickName, email, password);
+    }
+
+    public Customer(Long id, String name, String nickName, String email, String password) {
+        this.id = id;
         this.name = name;
         this.nickName = nickName;
         this.email = email;
@@ -54,5 +60,9 @@ public class Customer {
 
     public String getNickName() {
         return nickName;
+    }
+
+    public boolean isSameId(Long customerId) {
+        return Objects.equals(id, customerId);
     }
 }

@@ -7,9 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/customers")
+@RestController
+@RequestMapping("/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -18,9 +21,9 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<Customer> create(
-            @Valid CustomerCreateRequest customerCreateRequest
+            @Valid @RequestBody CustomerCreateRequest customerCreateRequest
     ) {
         Customer save = customerService.save(customerCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(save);
