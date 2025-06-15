@@ -13,13 +13,11 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
 
     private final CustomerJpaRepository customerJpaRepository;
-    private final ReservationJpaRepository reservationJpaRepository;
     private final RandomNameRestClient randomNameRestClient;
 
     public CustomerService(CustomerJpaRepository customerJpaRepository,
-                           ReservationJpaRepository reservationJpaRepository, RandomNameRestClient randomNameRestClient) {
+                           RandomNameRestClient randomNameRestClient) {
         this.customerJpaRepository = customerJpaRepository;
-        this.reservationJpaRepository = reservationJpaRepository;
         this.randomNameRestClient = randomNameRestClient;
     }
 
@@ -30,9 +28,5 @@ public class CustomerService {
         String nickName = randomNameRestClient.getRandomName();
         Customer customer = new Customer(name, nickName, email, password);
         return customerJpaRepository.save(customer);
-    }
-
-    public List<Reservation> findAllByMemberId(Long id) {
-        return reservationJpaRepository.findAllByCustomerId(id);
     }
 }

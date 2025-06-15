@@ -55,11 +55,6 @@ public class ReservationService {
         return reservationJpaRepository.findAllByCustomerId(id);
     }
 
-    private Reservation getReservationById(Long id) {
-        return reservationJpaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 예약입니다. 확인해 주세요."));
-    }
-
     private Customer getCustomerById(Long id) {
         return customerJpaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 회원입니다. 이름을 다시 확인해 주세요."));

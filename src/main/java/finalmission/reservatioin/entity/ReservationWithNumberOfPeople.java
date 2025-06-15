@@ -1,9 +1,5 @@
 package finalmission.reservatioin.entity;
 
-import finalmission.customer.entity.Customer;
-import finalmission.omakase.entity.Omakase;
-import java.time.LocalDate;
-
 public class ReservationWithNumberOfPeople {
 
     private final Reservation reservation;

@@ -3,19 +3,18 @@ package finalmission.customer.controller;
 import finalmission.customer.controller.dto.TokenLoginCreateRequest;
 import finalmission.customer.controller.dto.TokenLoginResponse;
 import finalmission.customer.entity.Customer;
-import finalmission.customer.service.AuthService;
 import finalmission.customer.resolver.LoginCustomer;
+import finalmission.customer.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("login/")
+@RestController("login")
 public class TokenLoginController {
 
     private final AuthService authService;

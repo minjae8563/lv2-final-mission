@@ -19,7 +19,6 @@ public class LoginCustomerArgumentResolver implements HandlerMethodArgumentResol
         this.authService = authService;
     }
 
-
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(LoginCustomer.class)
